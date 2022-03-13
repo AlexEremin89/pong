@@ -6,12 +6,6 @@ const wsField = new WebSocket(`ws://` + base_url + `/ws/field/`);
 const pads = ["pad1", "pad2", "pad3", "pad4"];
 const ball = document.getElementById("ball");
 
-function sendMessage(event) {
-    let input = document.getElementById("messageText")
-    ws.send(input.value)
-    input.value = ''
-    event.preventDefault()
-}
 
 document.addEventListener('keydown', (event) => {
   const keyName = event.key;
@@ -29,6 +23,7 @@ wsField.onmessage = function(event) {
 
 
 function renderMsg(msg){
+    // Function for rendering messages from backend
     let messages = document.getElementById('messages')
     let message = document.createElement('li')
     let content = document.createTextNode(msg)
@@ -38,6 +33,7 @@ function renderMsg(msg){
 
 
 function handleEvent(event){
+    // Function for handling event from websocket
     let msg = event.data;
 
     try {
