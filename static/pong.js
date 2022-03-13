@@ -5,7 +5,15 @@ const wsField = new WebSocket(`ws://` + base_url + `/ws/field/`);
 
 const pads = ["pad1", "pad2", "pad3", "pad4"];
 const ball = document.getElementById("ball");
+const reset = document.getElementById("reset");
 
+reset.addEventListener("click", sendMessage);
+
+
+function sendMessage(event) {
+    ws.send("Reset")
+    event.preventDefault()
+}
 
 document.addEventListener('keydown', (event) => {
   const keyName = event.key;

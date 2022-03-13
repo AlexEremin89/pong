@@ -8,6 +8,7 @@ Control by arrows and kick ball by Enter.
 The one who last touched the ball gets the point.
 The farther the ball hits from the center of the racket, the faster the ball flies.
 
+Use "Reset score" button to reset score.
 
 ## install
 You need python>=3.6 pip3 virtualenv

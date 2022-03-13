@@ -12,6 +12,7 @@
 9. I decided that for simplicity, the one who last touched the ball gets the point.
 10. I decided that after kick ball flies straight.
 11. I decided that the farther the ball hits from the center of the racket, the faster the ball flies.
+12. I decided to add reset button.
 
 
 ##Plan

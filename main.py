@@ -317,6 +317,15 @@ def get_speed(pad_name: str = None):
                 ALL_SYS["ball"]["speed"]["left"] = ALL_SYS["ball"]["speed"]["left"] * -1
 
 
+def reset_score():
+    """
+    Function for scores reset
+    :return:
+    """
+    for k in ALL_SYS["score"].keys():
+        ALL_SYS["score"][k] = 0
+
+
 def score(pad_name: str):
     """
     This function calculate scores and reset ball
@@ -450,6 +459,9 @@ async def websocket_pong_endpoint(websocket: WebSocket, client_id: int):
                 await manager.move_pad(client_id, data)
             if data == "Enter" and ALL_SYS[get_pad(client_id)]["with_ball"]:
                 kick_ball(client_id)
+            if data == "Reset":
+                reset_score()
+                await manager.broadcast(json.dumps({"info": "Score: {}".format(json.dumps(ALL_SYS["score"]))}))
     except WebSocketDisconnect:
         manager.disconnect(websocket, client_id)
         await manager.broadcast(json.dumps({"info": f"Client #{client_id} has left game"}))
