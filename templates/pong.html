@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pong</title>
+        <style type="text/css">
+            #field {
+                border: 1px solid black;
+                width: 400px;
+                height: 400px;
+            }
+
+            .pad {
+                border: 0px solid black;
+                background: black;
+                position: absolute;
+            }
+
+            .vertical-pad {
+                width: 10px;
+                height: 80px;
+            }
+
+            .horizontal-pad {
+                width: 80px;
+                height: 10px;
+            }
+
+            #pad1 {
+                left: 399px;
+                top: 158px;
+                visibility: hidden;
+            }
+
+            #pad2 {
+                left: 9px;
+                top: 158px;
+                visibility: hidden;
+            }
+
+            #pad3 {
+                left: 200px;
+                top: 0px;
+                visibility: hidden;
+            }
+
+            #pad4 {
+                left: 200px;
+                top: 400px;
+                visibility: hidden;
+            }
+
+            #ball {
+                left: 389px;
+                top: 183px;
+                width: 10px;
+                height: 10px;
+                background: black;
+                position: absolute;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="field">
+            <div id="pad1" class="pad vertical-pad"></div>
+            <div id="pad2" class="pad vertical-pad"></div>
+            <div id="pad3" class="pad horizontal-pad"></div>
+            <div id="pad4" class="pad horizontal-pad"></div>
+            <div id="ball"></div>
+        </div>
+        <ul id='messages'>
+        </ul>
+        <script type="text/javascript">
+            const base_url = "{{ r_base_url }}";
+        </script>
+        <script type="text/javascript" src="static/pong.js"></script>
+    </body>
+</html>

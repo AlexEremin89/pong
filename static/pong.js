@@ -1,8 +1,10 @@
 const client_id = Date.now()
 
-const ws = new WebSocket(`ws://localhost:8000/ws/pong/${client_id}`);
-// const wsField = new WebSocket(`ws://localhost:8000/ws/field/${client_id}`);
+const ws = new WebSocket( `ws://` + base_url + `/ws/pong/${client_id}`);
+const wsField = new WebSocket(`ws://` + base_url + `/ws/field/`);
 
+const pads = ["pad1", "pad2", "pad3", "pad4"];
+const ball = document.getElementById("ball");
 
 function sendMessage(event) {
     let input = document.getElementById("messageText")
@@ -13,33 +15,16 @@ function sendMessage(event) {
 
 document.addEventListener('keydown', (event) => {
   const keyName = event.key;
-  console.log(keyName);
   ws.send(keyName)
 });
 
 ws.onmessage = function(event) {
-    // var messages = document.getElementById('messages')
-    // var message = document.createElement('li')
-    // var content = document.createTextNode(event.data)
-    // message.appendChild(content)
-    // messages.appendChild(message)
-    let msg = event.data;
-    console.log(msg);
+    handleEvent(event);
+};
 
-    try {
-        let field = JSON.parse( msg );
-        let pad1 = document.getElementById("pad1");
 
-        if (field.hasOwnProperty("info")){
-            renderMsg(field.info);
-        } else {
-            pad1.style.top = field.pad1.top + "px";
-        }
-
-    } catch (e) {
-        renderMsg(e);
-    }
-
+wsField.onmessage = function(event) {
+    handleEvent(event);
 };
 
 
@@ -49,4 +34,37 @@ function renderMsg(msg){
     let content = document.createTextNode(msg)
     message.appendChild(content)
     messages.appendChild(message)
+}
+
+
+function handleEvent(event){
+    let msg = event.data;
+
+    try {
+        let field = JSON.parse( msg );
+
+        if (field.hasOwnProperty("info")){
+            renderMsg(field.info);
+        } else {
+            for (const padName of pads) {
+                let pad = document.getElementById(padName);
+                // set position
+                pad.style.top = field[padName].top + "px";
+                pad.style.left = field[padName].left + "px";
+
+                // set visibility
+                if (field[padName].active === true) {
+                pad.style.visibility = "visible";
+                } else {
+                    pad.style.visibility = "hidden";
+                }
+            }
+            // ball
+            ball.style.top = field.ball.top + "px";
+            ball.style.left = field.ball.left + "px";
+        }
+
+    } catch (e) {
+        renderMsg("Error: " + e);
+    }
 }
